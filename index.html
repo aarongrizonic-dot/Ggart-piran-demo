@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b46">
+  <meta name="description" content="Predstavitveni prototip spletne strani GGart Piran. Apartmaji v Piranu, doživetja in bodoča neposredna rezervacija.">
+  <title>GGart Piran | Življenje ob morju</title>
+  <style>
+    :root { --ink:#143b44; --ink2:#42616a; --cream:#f6f4ef; --white:#fff; --peach:#dd8b68; --sand:#eddfcc; --border:rgba(20,59,68,.14); --shadow:0 24px 60px rgba(11,43,50,.14); }
+    * { box-sizing:border-box }
+    html { scroll-behavior:smooth }
+    body { margin:0; color:var(--ink); background:var(--cream); font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.5 }
+    a { color:inherit; text-decoration:none }
+    button, input, select { font:inherit }
+    button, a { -webkit-tap-highlight-color:transparent }
+    .wrap { max-width:1170px; padding:0 28px; margin:auto }
+    .top { height:84px; background:#fffdf9; display:flex; align-items:center; position:relative; z-index:10 }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:22px; width:100% }
+    .brand { display:flex; flex-direction:column; line-height:1; letter-spacing:-.04em; font-weight:800; font-size:32px; }
+    .brand small { color:#a17959; margin-top:4px; font-weight:700; letter-spacing:.38em; font-size:10px; }
+    .navlinks { display:flex; align-items:center; gap:34px; font-size:14px; font-weight:650; }
+    .navlinks a:not(.navcta):hover { color:#c67851 }
+    .navcta { border:1px solid var(--ink); border-radius:100px; padding:12px 21px; transition:.2s }
+    .navcta:hover { background:var(--ink); color:white }
+    .menu-toggle { display:none; background:none; border:0; padding:10px; color:var(--ink); font-size:27px; cursor:pointer }
+    .hero { position:relative; min-height:565px; isolation:isolate; background-color:#1b5e6d; background-image:linear-gradient(90deg,rgba(6,42,53,.78) 0%,rgba(7,49,61,.53) 45%,rgba(15,74,88,.1) 100%), url('https://images.unsplash.com/photo-1647107258382-b2d53ee778e7?auto=format&fit=crop&w=2000&q=85'); background-size:cover; background-position:center 49%; }
+    .hero:before { content:""; position:absolute; z-index:-1; inset:0; background:linear-gradient(180deg,transparent 64%,rgba(8,39,49,.28)); }
+    .heroinner { padding-top:108px; padding-bottom:147px; color:#fff }
+    .eyebrow { display:inline-flex; align-items:center; gap:12px; letter-spacing:.22em; text-transform:uppercase; font-size:11px; font-weight:800 }
+    .eyebrow:before { content:""; background:var(--peach); width:28px; height:2px }
+    h1,h2,h3,p { margin-top:0 }
+    h1,h2,.serif { font-family:Georgia,"Times New Roman",serif; font-weight:400 }
+    h1 { font-size:clamp(49px,7vw,90px); line-height:1.05; letter-spacing:-.045em; max-width:720px; margin:23px 0 }
+    .hero p { color:#f5faf8; max-width:480px; font-size:18px; line-height:1.75 }
+    .heroactions { display:flex; gap:14px; flex-wrap:wrap; margin-top:30px }
+    .btn { border:0; cursor:pointer; padding:15px 24px; display:inline-flex; align-items:center; justify-content:center; gap:9px; border-radius:5px; font-size:14px; font-weight:800; transition:transform .2s,background .2s; }
+    .btn:hover { transform:translateY(-2px) }
+    .btn-primary { background:#e9a27e; color:#173c45 }
+    .btn-primary:hover { background:#efb69a }
+    .btn-outline { color:white; border:1px solid #ffffffa8; background:#ffffff16 }
+    .booking-wrap { position:relative; margin-top:-74px; z-index:2 }
+    .booking { background:#fff; border-radius:12px; box-shadow:var(--shadow); padding:25px 29px 29px }
+    .booking-title { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:16px }
+    .booking-title strong { font-size:19px }
+    .booking-title span { font-size:12px; color:#78909a }
+    .booking-grid { display:grid; grid-template-columns:1fr 1fr .78fr auto; gap:13px; align-items:end }
+    .field { display:flex; flex-direction:column; gap:8px }
+    label { font-size:12px; letter-spacing:.04em; font-weight:800 }
+    .field input,.field select { width:100%; min-width:0; color:var(--ink); background:#f8f8f5; border:1px solid #dce2df; border-radius:5px; height:51px; padding:0 13px }
+    .booking-grid button { height:51px; white-space:nowrap; background:var(--ink); color:white }
+    .booking-grid button:hover { background:#205d6c }
+    .subnote { margin:12px 0 0; color:#748a90; font-size:11px }
+    .section { padding:103px 0 }
+    .section-head { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:35px }
+    .kicker { color:#b97759; letter-spacing:.18em; text-transform:uppercase; font-size:11px; font-weight:900; }
+    h2 { font-size:clamp(37px,4.5vw,57px); line-height:1.11; letter-spacing:-.045em; margin:12px 0 0 }
+    .section-head p { color:#6d8388; max-width:350px; margin:0; font-size:14px }
+    .apartments { display:grid; grid-template-columns:repeat(3,1fr); gap:23px }
+    .unit { border-radius:10px; overflow:hidden; background:#fff; box-shadow:0 8px 32px rgba(20,59,68,.05); transition:transform .2s }
+    .unit:hover { transform:translateY(-4px) }
+    .unit-img { height:234px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden }
+    .unit-img.one { background:linear-gradient(145deg,#bca48b,#e6d5be) }
+    .unit-img.two { background:linear-gradient(135deg,#7b9c9a,#b3c9c3) }
+    .unit-img.three { background:linear-gradient(140deg,#cdad91,#ead4b7) }
+    .unit-img:before { content:""; position:absolute; width:185px; height:185px; border:1px solid #ffffff80; border-radius:50%; transform:translate(85px,-45px) }
+    .unit-img:after { content:""; position:absolute; width:280px; height:280px; border:1px solid #ffffff68; border-radius:50%; transform:translate(-90px,80px) }
+    .unit-img b { font-family:Georgia,serif; font-size:94px; font-weight:400; color:#fff9; letter-spacing:-.08em }
+    .img-label { position:absolute; left:16px; bottom:15px; z-index:1; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#fff; background:#173f4a88; padding:7px 10px; border-radius:4px }
+    .unit-body { padding:22px 22px 26px }
+    .unit-top { color:#b37c60; font-size:11px; text-transform:uppercase; letter-spacing:.15em; font-weight:900 }
+    .unit h3 { font:400 29px Georgia,serif; margin:9px 0 }
+    .unit p { font-size:13px; color:#6a8185; line-height:1.6; min-height:42px }
+    .unit-footer { border-top:1px solid #e5e9e6; margin-top:18px; padding-top:17px; display:flex; justify-content:space-between; align-items:center; font-size:13px }
+    .unit-footer button { border:0; background:none; color:var(--ink); font-weight:800; cursor:pointer; padding:4px 0 }
+    .unit-footer button:hover { color:#b97759 }
+    .why { background:#eaece5 }
+    .whygrid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center }
+    .illustration { height:360px; border-radius:12px; overflow:hidden; position:relative; background:linear-gradient(160deg,#b5d0c9 0%,#93b3ac 47%,#346476 47%,#143f57 100%) }
+    .sun { position:absolute; top:42px; right:70px; width:90px; height:90px; border-radius:50%; background:#f3deb3; box-shadow:0 0 80px #f3deb392 }
+    .shore { position:absolute; bottom:-40px; left:-25px; width:120%; height:120px; background:#f0e0c7; transform:rotate(-11deg) }
+    .building { position:absolute; bottom:83px; left:58px; background:#f5e9d6; height:169px; width:115px; box-shadow:120px 35px 0 #e1b798,212px -22px 0 #f2d7bb }
+    .building:before {content:"";position:absolute;top:-41px;left:-7px;border-left:65px solid transparent;border-right:65px solid transparent;border-bottom:43px solid #9e6154;transform:rotate(180deg)}
+    .building:after {content:"";position:absolute;top:31px;left:22px;width:20px;height:40px;background:#426979;box-shadow:54px 0 #426979,0 69px #426979,54px 69px #426979,131px 31px #426979,185px 31px #426979}
+    .whytext > p { color:#526e74; margin:24px 0; line-height:1.9 }
+    .benefits { display:grid; gap:19px; margin-top:32px }
+    .benefit { display:flex; gap:15px; align-items:start }
+    .benefiticon { width:39px; height:39px; background:white; border-radius:50%; display:grid; place-items:center; flex:none }
+    .benefit b { display:block; font-size:14px; margin-bottom:3px }
+    .benefit span { font-size:12px; color:#687f83 }
+    .footer { background:#123b46; color:#e8efec; padding:48px 0 28px }
+    .footerinner { display:flex; justify-content:space-between; gap:25px; align-items:center }
+    .footer .brand { color:white }
+    .footer p { color:#b7cdce; font-size:13px; margin:0; max-width:425px }
+    .fineprint { padding-top:32px; margin-top:35px; border-top:1px solid #ffffff2d; color:#b6cacb; font-size:11px; display:flex; justify-content:space-between; gap:16px; }
+    .toast { display:none; position:fixed; z-index:40; left:50%; bottom:25px; transform:translateX(-50%); width:min(510px,calc(100vw - 30px)); border-radius:12px; background:#123b46; padding:20px 23px; color:white; box-shadow:0 12px 40px #09293466; }
+    .toast.visible { display:block }
+    .toast strong { display:block; margin-bottom:5px; font-size:16px }
+    .toast span { color:#c9ddda; font-size:13px }
+    .toast button { margin-top:13px; border:1px solid #a5cbc7; color:white; border-radius:4px; background:none; padding:7px 17px; cursor:pointer }
+    @media (max-width:850px) { .navlinks { gap:15px } .booking-grid { grid-template-columns:1fr 1fr } .apartments { grid-template-columns:repeat(2,1fr) } .whygrid { gap:30px } }
+    @media (max-width:620px) { .wrap { padding-left:20px; padding-right:20px } .top { height:71px } .brand { font-size:26px } .menu-toggle { display:block } .navlinks { display:none; position:absolute; top:70px; left:0; right:0; background:#fffdf9; padding:20px 24px 27px; box-shadow:0 20px 35px #123b4621; flex-direction:column; align-items:stretch; gap:0 } .navlinks.open { display:flex } .navlinks a { padding:12px 0 } .navlinks .navcta { text-align:center; margin-top:9px } .hero { min-height:575px; background-position:center center } .heroinner { padding-top:96px; padding-bottom:166px } .hero p { font-size:15px; max-width:350px } h1 { font-size:56px } .heroactions { gap:10px } .btn { padding:14px 17px } .booking-wrap { margin-top:-92px } .booking { padding:22px 20px 20px } .booking-title { align-items:start; flex-direction:column; gap:4px } .booking-grid { grid-template-columns:1fr 1fr; gap:12px } .booking-grid .guests, .booking-grid button { grid-column:span 2 } .field input,.field select { padding:0 8px; font-size:13px } .section { padding:72px 0 } .section-head { align-items:start; flex-direction:column; gap:16px } .apartments { grid-template-columns:1fr } .unit-img { height:210px } .whygrid { grid-template-columns:1fr } .illustration { height:270px; order:2 } .whytext { order:1 } .footerinner { flex-direction:column; align-items:start } .fineprint { flex-direction:column } }
+    @media (prefers-reduced-motion:reduce) { html {scroll-behavior:auto} .btn,.unit {transition:none} }
+  </style>
+</head>
+<body>
+<header class="top">
+  <nav class="wrap nav" aria-label="Glavna navigacija">
+    <a class="brand" href="#domov" aria-label="GGart Piran, domov">GGart<small>PIRAN · SLOVENIA</small></a>
+    <button class="menu-toggle" aria-label="Odpri meni" aria-expanded="false" id="menuBtn">☰</button>
+    <div class="navlinks" id="navLinks">
+      <a href="#apartmaji">Apartmaji</a><a href="#piran">O Piranu</a><a href="#kontakt">Kontakt</a><a class="navcta" href="#rezervacije">Preveri razpoložljivost ↗</a>
+    </div>
+  </nav>
+</header>
+<main id="domov">
+  <section class="hero" aria-label="Dobrodošli v Piranu">
+    <div class="wrap heroinner">
+      <div class="eyebrow">Doživite slovensko obalo</div>
+      <h1>Vaš košček<br><em>Pirana.</em></h1>
+      <p>Ulice z zgodbo. Jutra ob morju. In prijeten prostor, kamor se po raziskovanju najlepšega obalnega mesta vedno radi vrnete.</p>
+      <div class="heroactions">
+        <a class="btn btn-primary" href="#apartmaji">Odkrijte apartmaje <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-outline" href="#piran">Zakaj Piran?</a>
+      </div>
+    </div>
+  </section>
+  <div class="wrap booking-wrap" id="rezervacije">
+    <form class="booking" id="bookingForm">
+      <div class="booking-title"><strong>Načrtujte svoj oddih</strong><span>Predstavitveni obrazec · brez dejanske rezervacije</span></div>
+      <div class="booking-grid">
+        <div class="field"><label for="arrival">Datum prihoda</label><input id="arrival" name="arrival" type="date" required></div>
+        <div class="field"><label for="departure">Datum odhoda</label><input id="departure" name="departure" type="date" required></div>
+        <div class="field guests"><label for="guests">Število gostov</label><select name="guests" id="guests"><option value="1">1 gost</option><option value="2" selected>2 gosta</option><option value="3">3 gostje</option><option value="4">4 gostje</option><option value="5">5+ gostov</option></select></div>
+        <button class="btn" type="submit">Preveri termine ↗</button>
+      </div>
+      <p class="subnote">V končni različici bo preverjanje prostih terminov povezano z Bentralom.</p>
+    </form>
+  </div>
+  <section class="section" id="apartmaji">
+    <div class="wrap">
+      <div class="section-head"><div><div class="kicker">Prostor za vaš oddih</div><h2>Namestitve z značajem.</h2></div><p>Izbor apartmajev bomo tu predstavili z njihovimi pravimi fotografijami, opisi, zmogljivostmi in cenami.</p></div>
+      <div class="apartments">
+        <article class="unit"><div class="unit-img one"><b>01</b><span class="img-label">Mesto za vašo fotografijo</span></div><div class="unit-body"><div class="unit-top">Predstavitvena kartica</div><h3>Apartma 01</h3><p>Tu bo pravi opis apartmaja in njegova glavna prednost.</p><div class="unit-footer"><span>Podatki se dodajo pozneje</span><button class="detailsBtn">Podrobnosti ↗</button></div></div></article>
+        <article class="unit"><div class="unit-img two"><b>02</b><span class="img-label">Mesto za vašo fotografijo</span></div><div class="unit-body"><div class="unit-top">Predstavitvena kartica</div><h3>Apartma 02</h3><p>Fotografije, oprema, število gostov in lokacija enote.</p><div class="unit-footer"><span>Podatki se dodajo pozneje</span><button class="detailsBtn">Podrobnosti ↗</button></div></div></article>
+        <article class="unit"><div class="unit-img three"><b>03</b><span class="img-label">Mesto za vašo fotografijo</span></div><div class="unit-body"><div class="unit-top">Predstavitvena kartica</div><h3>Apartma 03</h3><p>V končni strani bo vsaka namestitev imela svojo galerijo.</p><div class="unit-footer"><span>Podatki se dodajo pozneje</span><button class="detailsBtn">Podrobnosti ↗</button></div></div></article>
+      </div>
+    </div>
+  </section>
+  <section class="section why" id="piran">
+    <div class="wrap whygrid">
+      <div class="illustration" role="img" aria-label="Ilustracija mediteranske obalne vasice"><span class="sun"></span><span class="building"></span><span class="shore"></span></div>
+      <div class="whytext"><div class="kicker">Več kot le prenočišče</div><h2>Piran se začuti.<br>Ne samo obišče.</h2><p>Za ovinkom se odpre trg. Diši po kavi. Še nekaj korakov in pred vami je morje. Staro mestno jedro je tisto, zaradi česar se gostje radi vračajo.</p>
+        <div class="benefits"><div class="benefit"><span class="benefiticon">♧</span><div><b>Mediteranski utrip</b><span>Uživanje v ritmu mesta, ulic in obale.</span></div></div><div class="benefit"><span class="benefiticon">✧</span><div><b>Prostor za raziskovanje</b><span>Od Tartinijevega trga do obalnih sprehodov.</span></div></div><div class="benefit"><span class="benefiticon">♡</span><div><b>Pravi občutek dopusta</b><span>Vzemite si čas za stvari, ki štejejo.</span></div></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer" id="kontakt"><div class="wrap"><div class="footerinner"><a href="#domov" class="brand">GGart<small>PIRAN · SLOVENIA</small></a><p>Bi radi doživeli Piran po svoje? V naslednjem koraku bomo dodali pravi kontakt, jezike in neposredno rezervacijo prek Bentrala.</p></div><div class="fineprint"><span>© GGart Piran · predstavitveni prototip</span><span>Fotografija Pirana: Unsplash · <a href="https://unsplash.com/photos" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">vir</a> · brez aktivnih rezervacij</span></div></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"><strong id="toastTitle"></strong><span id="toastText"></span><br><button id="closeToast" type="button">Razumem</button></div>
+<script>
+(function(){
+ const menuBtn=document.querySelector('#menuBtn'),nav=document.querySelector('#navLinks');
+ menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.textContent=open?'✕':'☰';});
+ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰';}));
+ const today=new Date();const todayStr=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
+ const arrival=document.querySelector('#arrival'),departure=document.querySelector('#departure');arrival.min=todayStr;departure.min=todayStr;
+ arrival.addEventListener('change',()=>{departure.min=arrival.value||todayStr;if(departure.value&&departure.value<=arrival.value)departure.value='';});
+ const toast=document.querySelector('#toast');function notice(title,message){document.querySelector('#toastTitle').textContent=title;document.querySelector('#toastText').textContent=message;toast.classList.add('visible');}
+ document.querySelector('#closeToast').addEventListener('click',()=>toast.classList.remove('visible'));
+ document.querySelector('#bookingForm').addEventListener('submit',e=>{e.preventDefault();if(departure.value<=arrival.value){notice('Preveri datume','Odhod mora biti po prihodu.');return;}const guests=document.querySelector('#guests').selectedOptions[0].textContent;notice('To je še prototip','Izbrali ste '+arrival.value+' do '+departure.value+' ('+guests+'). Dejanska razpoložljivost in rezervacija bosta mogoči šele po povezavi z Bentralom.');});
+ document.querySelectorAll('.detailsBtn').forEach(b=>b.addEventListener('click',()=>notice('Predogled apartmaja','Ko dodamo prave fotografije in podatke, bo ta gumb odprl podstran posamezne namestitve.')));
+})();
+</script>
+</body>
+</html>
